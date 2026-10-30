@@ -21,6 +21,17 @@
    "note": "",
    "settled": false,
    "u": 1793369570250
+  },
+  {
+   "id": "mvv1xz0b45wd",
+   "who": "Zoli",
+   "amount": 7.35,
+   "own": 0,
+   "store": "DM",
+   "date": "2026-10-30T15:12",
+   "note": "",
+   "settled": false,
+   "u": 1793369578619
   }
  ],
  "settlements": [],
