@@ -65,6 +65,17 @@
    "note": "",
    "settled": false,
    "u": 1793378302816
+  },
+  {
+   "id": "mvv8b7bgr4pu",
+   "who": "Zoli",
+   "amount": 8.65,
+   "own": 0,
+   "store": "Lidl",
+   "date": "2026-10-30T18:11",
+   "note": "",
+   "settled": false,
+   "u": 1793380273613
   }
  ],
  "settlements": [],
