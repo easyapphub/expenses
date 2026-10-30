@@ -32,6 +32,17 @@
    "note": "",
    "settled": false,
    "u": 1793369578619
+  },
+  {
+   "id": "mvv1y87uri5u",
+   "who": "Zoli",
+   "amount": 19.13,
+   "own": 0,
+   "store": "Tesco",
+   "date": "2026-10-30T15:12",
+   "note": "",
+   "settled": false,
+   "u": 1793369590554
   }
  ],
  "settlements": [],
