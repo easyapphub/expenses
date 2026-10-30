@@ -10,6 +10,17 @@
    "note": "",
    "settled": false,
    "u": 1793369551171
+  },
+  {
+   "id": "mvv1xsjulpcp",
+   "who": "Zoli",
+   "amount": 3.17,
+   "own": 0,
+   "store": "IKEA",
+   "date": "2026-10-30T15:12",
+   "note": "",
+   "settled": false,
+   "u": 1793369570250
   }
  ],
  "settlements": [],
