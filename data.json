@@ -1,18 +1,8 @@
 {
- "expenses": [
-  {
-   "id": "mvuwsixitokr",
-   "who": "Veronika",
-   "amount": 25.32,
-   "own": 5,
-   "store": "Lidl",
-   "date": "2026-10-30T12:48",
-   "note": "",
-   "settled": false,
-   "u": 1793360926422
-  }
- ],
+ "expenses": [],
  "settlements": [],
  "recurring": [],
- "deleted": []
+ "deleted": [
+  "mvuwsixitokr"
+ ]
 }
