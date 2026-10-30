@@ -43,6 +43,17 @@
    "note": "",
    "settled": false,
    "u": 1793369606186
+  },
+  {
+   "id": "mvv1yqtfg2e3",
+   "who": "Veronika",
+   "amount": 15.99,
+   "own": 0,
+   "store": "Sinsay",
+   "date": "2026-10-30T15:13",
+   "note": "",
+   "settled": false,
+   "u": 1793369614659
   }
  ],
  "settlements": [],
