@@ -54,6 +54,17 @@
    "note": "",
    "settled": false,
    "u": 1793369614659
+  },
+  {
+   "id": "mvv74yn3dadk",
+   "who": "Zoli",
+   "amount": 19.92,
+   "own": 14.95,
+   "store": "Action",
+   "date": "2026-10-30T17:38",
+   "note": "",
+   "settled": false,
+   "u": 1793378302816
   }
  ],
  "settlements": [],
