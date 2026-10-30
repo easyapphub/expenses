@@ -8,11 +8,22 @@
    "store": "Lidl",
    "date": "2026-10-30T13:48",
    "note": "",
-   "settled": false,
-   "u": 1793364546409
+   "settled": true,
+   "u": 1793364576680
   }
  ],
- "settlements": [],
+ "settlements": [
+  {
+   "id": "mvuyyrhksfsz",
+   "date": "2026-10-30T13:49",
+   "from": "Zoli",
+   "to": "Veronika",
+   "amount": 10,
+   "ids": [
+    "mvuyy44p8j4e"
+   ]
+  }
+ ],
  "recurring": [],
  "deleted": [
   "mvuwsixitokr"
