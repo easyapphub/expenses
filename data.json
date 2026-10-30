@@ -1,5 +1,17 @@
 {
- "expenses": [],
+ "expenses": [
+  {
+   "id": "mvv1xdtvfico",
+   "who": "Zoli",
+   "amount": 35.9,
+   "own": 0,
+   "store": "Decathlon",
+   "date": "2026-10-30T15:11",
+   "note": "",
+   "settled": false,
+   "u": 1793369551171
+  }
+ ],
  "settlements": [],
  "recurring": [],
  "deleted": [
