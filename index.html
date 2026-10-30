@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f5d8a">
+<title>Közös kiadások</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#f2f4f8;--card:#fff;--ink:#1b2130;--mute:#6b7488;--line:#e3e7ef;--z:#2f5d8a;--zs:#e3edf7;--v:#b4476b;--vs:#f8e6ed;--ok:#2e8b57;
+--r:16px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);box-sizing:border-box;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b202b;--ink:#eef1f7;--mute:#9099ad;--line:#2b3242;--z:#6aa3d8;--zs:#1f3144;--v:#e57b9f;--vs:#3a2230;--ok:#58c28a}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);min-height:100%}
+main{max-width:560px;margin:0 auto;padding:16px 16px 48px}
+header{display:flex;justify-content:space-between;align-items:center;margin:4px 0 14px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+select,input{font:inherit;color:inherit}
+.cur{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.who button{padding:14px 8px;border-radius:12px;border:2px solid var(--line);background:var(--card);font:inherit;font-weight:650;font-size:17px;color:var(--ink);cursor:pointer}
+.who button[data-p=Zoli][aria-pressed=true]{background:var(--zs);border-color:var(--z);color:var(--z)}
+.who button[data-p=Veronika][aria-pressed=true]{background:var(--vs);border-color:var(--v);color:var(--v)}
+label.l{display:block;font-size:14px;color:var(--mute);margin:14px 0 6px}
+.amt{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:6px 14px;background:var(--card)}
+.amt:focus-within{border-color:var(--ink)}
+.amt input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:30px;font-weight:700;padding:6px 0;width:100%}
+.amt span{font-size:18px;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.txt{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--card);margin-top:10px}
+.txt[hidden]{display:none}
+.main{width:100%;margin-top:18px;padding:16px;border:0;border-radius:14px;background:var(--ink);color:var(--bg);font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--z);outline-offset:2px}
+.tot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tot div{border-radius:12px;padding:12px}
+.tot .z{background:var(--zs);color:var(--z)}.tot .v{background:var(--vs);color:var(--v)}
+.tot b{display:block;font-size:22px;margin:2px 0}.tot small{font-size:12px;opacity:.8}
+.bar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:14px 0 4px;background:var(--line)}
+.bar i{display:block;transition:width .4s}.bar .a{background:var(--z)}.bar .b{background:var(--v)}
+.res{font-size:17px;line-height:1.4;margin:12px 0 0;text-align:center}.res strong{font-size:24px;display:block;margin-top:4px}
+.res.even{color:var(--ok);font-weight:650}
+.settle{width:100%;margin-top:12px;padding:13px;border-radius:12px;border:2px solid var(--ok);background:transparent;color:var(--ok);font:inherit;font-weight:700;cursor:pointer}
+.settle:disabled{opacity:.35;cursor:default}
+h2{font-size:17px;margin:0 0 6px}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+li:first-child{border-top:0}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dot.Zoli{background:var(--z)}.dot.Veronika{background:var(--v)}
+.info{flex:1;min-width:0}.info b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.info small{color:var(--mute);font-size:13px}.sum{font-weight:700;white-space:nowrap}
+.del{border:0;background:transparent;color:var(--mute);font-size:22px;line-height:1;padding:6px 8px;cursor:pointer;border-radius:8px}
+.old li{opacity:.6}.old li.set{opacity:1;color:var(--ok);font-weight:600}
+details summary{cursor:pointer;font-weight:650;padding:2px 0}
+.empty{color:var(--mute);padding:10px 0;text-align:center}
+.toast{position:fixed;top:auto;right:auto;margin:0;border:0;width:max-content;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.pill{display:block;width:100%;text-align:left;margin:-4px 0 14px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mute);font:inherit;font-size:14px;cursor:pointer}
+.pill.ok{color:var(--ok)}.pill.err{color:#c0392b}
+dialog{border:0;border-radius:var(--r);background:var(--card);color:var(--ink);width:min(92vw,480px);padding:18px}
+dialog::backdrop{background:#0009}
+dialog p,dialog ol{font-size:14px;color:var(--mute);line-height:1.45}dialog ol{padding-left:20px;margin:8px 0}
+dialog .txt{margin-top:0}
+.seg{display:flex;gap:6px;margin:8px 0 12px}
+.seg button{flex:1;padding:9px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.kpi div{background:var(--bg);border-radius:12px;padding:10px}.kpi b{display:block;font-size:16px}.kpi small{color:var(--mute);font-size:12px}
+h3{font-size:15px;margin:20px 0 4px}
+.hb{margin:10px 0}.hb .t{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:4px}
+.hb .t span:last-child{font-weight:700}.hb .t.p span{font-weight:400}.hb small{color:var(--mute)}
+.hb .tr{height:12px;background:var(--line);border-radius:6px;overflow:hidden}
+.hb .f{display:flex;height:100%;border-radius:6px;overflow:hidden}.hb .f i{display:block;height:100%}
+.zc{background:var(--z)}.vc{background:var(--v)}
+.cols{display:flex;align-items:flex-end;gap:8px;height:150px;margin-top:8px}
+.cols .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.cols .stk{width:100%;display:flex;flex-direction:column-reverse;border-radius:6px 6px 0 0;overflow:hidden}.cols .stk i{display:block;width:100%}
+.cols small{font-size:12px;color:var(--mute);margin-top:4px}.cols .mv{font-size:11px;color:var(--mute);margin-bottom:3px}
+.lg{display:flex;gap:14px;font-size:13px;color:var(--mute);margin:6px 0 2px}.lg .dot{display:inline-block;margin-right:6px}
+.flags{display:flex;gap:8px}
+.flags button{padding:3px;border:2px solid transparent;border-radius:9px;background:transparent;cursor:pointer;opacity:.45;line-height:0}
+.flags button[aria-pressed=true]{opacity:1;border-color:var(--ink)}
+.flags svg{width:36px;height:24px;border-radius:3px;box-shadow:0 0 0 1px var(--line)}
+.hint{font-size:13px;color:var(--mute);margin:6px 0 0;line-height:1.4}.hint:empty{display:none}#ownNote{text-align:center}
+.info small{display:block;overflow-wrap:anywhere}
+.undo{margin-left:auto;flex:none;padding:6px 10px;border-radius:9px;border:1.5px solid var(--ok);background:transparent;color:var(--ok);font:inherit;font-size:13px;font-weight:650;cursor:pointer}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sec{padding:13px 8px;border-radius:12px;border:2px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:650;cursor:pointer}
+dialog{max-height:90vh;overflow:auto}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header><h1 data-i18n="title"></h1><div class="flags" id="lang">
+<button type="button" data-l="hu" aria-label="Magyar" aria-pressed="false"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.67" fill="#ce2939"/><rect y="13.33" width="30" height="6.67" fill="#477050"/></svg></button>
+<button type="button" data-l="sk" aria-label="Slovenčina" aria-pressed="false"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0b4ea2"/><rect y="13.33" width="30" height="6.67" fill="#ee1c25"/><path d="M6 4.5h7v6.2c0 2.4-3.5 3.8-3.5 3.8S6 13.1 6 10.7z" fill="#ee1c25" stroke="#fff" stroke-width=".6"/><path d="M9.5 6v6M7.6 7.6h3.8M8 9.3h3" stroke="#fff" stroke-width=".9"/></svg></button>
+</div></header>
+<button class="pill" id="st" type="button"></button>
+
+<section class="card" aria-label="Új költség">
+<div class="who" id="who">
+<button type="button" data-p="Zoli" aria-pressed="false">Zoli</button>
+<button type="button" data-p="Veronika" aria-pressed="false">Veronika</button></div>
+<label class="l" for="amount" data-i18n="amount"></label>
+<div class="amt"><input id="amount" type="text" inputmode="decimal" placeholder="0" autocomplete="off"><span>€</span></div>
+<label class="l" for="own" data-i18n="ownLbl"></label>
+<div class="amt" style="padding:2px 14px"><input id="own" type="text" inputmode="decimal" placeholder="0" autocomplete="off" style="font-size:20px"><span>€</span></div>
+<p class="hint" data-i18n="ownHint"></p>
+<label class="l" data-i18n="store"></label>
+<div class="chips" id="stores"></div>
+<input id="other" class="txt" type="text" data-ph="storeNamePh" placeholder="Üzlet neve" maxlength="40" hidden>
+<label class="l" for="date" data-i18n="time"></label>
+<input id="date" class="txt" type="datetime-local" style="margin-top:0">
+<label class="l" for="note" data-i18n="noteLbl"></label>
+<input id="note" class="txt" type="text" maxlength="80" data-ph="notePh" autocomplete="off" style="margin-top:0">
+<button class="main" id="add" type="button" data-i18n="save"></button>
+</section>
+
+<section class="card" aria-label="Egyenleg">
+<div class="tot"><div class="z"><small data-i18n="zPaid"></small><b id="tz">0</b><small id="az"></small></div>
+<div class="v"><small data-i18n="vPaid"></small><b id="tv">0</b><small id="av"></small></div></div>
+<div class="bar"><i class="a" id="ba" style="width:50%"></i><i class="b" id="bb" style="width:50%"></i></div>
+<p class="res" id="res"></p>
+<p class="hint" id="ownNote"></p>
+<button class="settle" id="settle" type="button" data-i18n="settleBtn"></button>
+</section>
+
+<section class="card" aria-label="Napló">
+<h2 data-i18n="log"></h2><ul id="log"></ul>
+<details class="old" id="oldBox" hidden style="margin-top:12px"><summary data-i18n="old"></summary><ul id="old"></ul></details>
+</section>
+
+<section class="card" aria-label="Statisztika">
+<h2 data-i18n="stats"></h2>
+<div class="seg" id="range"><button type="button" data-r="all" aria-pressed="true" data-i18n="all"></button><button type="button" data-r="month" aria-pressed="false" data-i18n="thisMonth"></button></div>
+<div id="stats"></div>
+</section>
+
+<section class="card" aria-label="Tools"><div class="tools"><button class="sec" id="rcBtn" type="button" data-i18n="rcBtn"></button><button class="sec" id="csvBtn" type="button" data-i18n="csvBtn"></button></div></section>
+</main>
+<dialog id="ed"><h2 data-i18n="edTitle"></h2>
+<div class="who" id="edWho"><button type="button" data-p="Zoli" aria-pressed="false">Zoli</button><button type="button" data-p="Veronika" aria-pressed="false">Veronika</button></div>
+<label class="l" for="edAmt" data-i18n="amount"></label><input id="edAmt" class="txt" type="text" inputmode="decimal" autocomplete="off">
+<label class="l" for="edOwn" data-i18n="ownLbl"></label><input id="edOwn" class="txt" type="text" inputmode="decimal" placeholder="0" autocomplete="off">
+<label class="l" for="edStore" data-i18n="store"></label><input id="edStore" class="txt" type="text" list="sl" maxlength="40" autocomplete="off"><datalist id="sl"></datalist>
+<label class="l" for="edDate" data-i18n="time"></label><input id="edDate" class="txt" type="datetime-local">
+<label class="l" for="edNote" data-i18n="noteLbl"></label><input id="edNote" class="txt" type="text" maxlength="80" autocomplete="off">
+<button class="main" id="edSave" type="button" data-i18n="saveEdit"></button>
+<button class="settle" id="edCancel" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></dialog>
+<dialog id="rc"><h2 data-i18n="rcBtn"></h2><p data-i18n="rcP"></p><ul id="rcList"></ul>
+<div class="who" id="rcWho" style="margin-top:12px"><button type="button" data-p="Zoli" aria-pressed="false">Zoli</button><button type="button" data-p="Veronika" aria-pressed="false">Veronika</button></div>
+<label class="l" for="rcAmt" data-i18n="amount"></label><input id="rcAmt" class="txt" type="text" inputmode="decimal" placeholder="0" autocomplete="off">
+<label class="l" for="rcName" data-i18n="rcNameLbl"></label><input id="rcName" class="txt" type="text" maxlength="40" autocomplete="off">
+<label class="l" for="rcDayIn" data-i18n="rcDayLbl"></label><input id="rcDayIn" class="txt" type="number" min="1" max="28" value="1">
+<button class="main" id="rcAdd" type="button" data-i18n="rcAdd"></button>
+<button class="settle" id="rcClose" data-i18n="close" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></dialog>
+<dialog id="dlg">
+<h2 data-i18n="dlgTitle"></h2>
+<p data-i18n="dlgP"></p>
+<label class="l" for="ghRepo" data-i18n="repoLbl"></label>
+<input id="ghRepo" class="txt" type="text" placeholder="zoli/kozos-adatok" autocapitalize="off" autocomplete="off">
+<label class="l" for="ghPath" data-i18n="fileLbl"></label>
+<input id="ghPath" class="txt" type="text" value="data.json" autocapitalize="off" autocomplete="off">
+<label class="l" for="ghTok">Token</label>
+<input id="ghTok" class="txt" type="password" placeholder="github_pat_…" autocomplete="off">
+<details style="margin-top:12px"><summary data-i18n="howTo"></summary>
+<ol><li>GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.</li>
+<li data-i18n="ol2"></li>
+<li>Permissions → Contents: Read and write.</li>
+<li data-i18n="ol4"></li></ol></details>
+<button class="main" id="ghSave" type="button" data-i18n="ghSave"></button>
+<button class="settle" id="ghOff" data-i18n="ghOff" type="button" style="border-color:var(--line);color:var(--mute)">Szinkron kikapcsolása</button>
+<button class="settle" id="ghClose" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px">Mégse</button>
+</dialog>
+<dialog id="cf"><p id="cfMsg" style="font-size:17px;color:var(--ink);margin:0 0 4px"></p>
+<button class="main" id="cfOk" type="button">OK</button>
+<button class="settle" id="cfNo" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px">Mégse</button></dialog>
+<div class="toast" id="toast" popover="manual" role="status"></div>
+
+<script>
+(function(){
+var KEY="kozos-kiadasok-v1",STORES=["Lidl","Action","Kaufland","Tesco","DM","Sinsay","Takko","Biedronka","Pepco","Más"];
+var S={expenses:[],settlements:[],deleted:[],recurring:[],currency:"€"},who=null,store=null;
+var $=function(i){return document.getElementById(i)};
+var D={hu:{Zoli:"Zolinak",Veronika:"Veronikának"},sk:{Zoli:"Zolimu",Veronika:"Veronike"}};
+var T={hu:{"title":"Közös kiadások","amount":"Összeg","store":"Üzlet","other":"Más","storeNamePh":"Üzlet neve","time":"Időpont","save":"Költség mentése","zPaid":"Zoli fizetett","vPaid":"Veronika fizetett","allTotal":"Összesen: ","settleBtn":"Átküldte, nullázás","log":"Napló","old":"Korábban elszámolt","stats":"Statisztika","all":"Összes","thisMonth":"Ez a hónap","total":"Összesen","count":"Vásárlás","avg":"Átlag","byStore":"Üzletek szerint","monthly":"Havi bontás (utolsó 6 hónap, €)","statsEmpty":"A statisztika az első költség után jelenik meg.","noMonth":"Ebben a hónapban még nincs költség.","none":"Nincs nyitott tétel, minden rendezve.","even":"Egyenlők vagytok, senkinek nem kell utalnia.","logEmpty":"Még nincs költség. Add meg az elsőt fent.","del":"Törlés","delAsk":"Törlöd ezt a tételt?","cancel":"Mégse","settleAll":"Mindent elszámoltnak jelölsz?","settleOk":"Nullázás","settledToast":"Egyenleg nullázva","settledRow":"Elszámolva:","saved":"mentve","vWho":"Válaszd ki, ki fizetett","vAmt":"Add meg az összeget","vStore":"Válassz üzletet","vName":"Írd be az üzlet nevét","storeErr":"A mentés nem sikerült a böngészőben","stOff":"☁ Csak ezen a telefonon. Koppints a közös szinkronhoz.","stSync":"☁ Szinkronizálás…","stOk":"☁ Szinkronizálva","e401":"hibás token","e403":"nincs jogosultság","e404":"a repó nem található","econflict":"ütközés, próbáld újra","enone":"nincs kapcsolat","repoFmt":"A repó formátuma: felhasználó/repó","needTok":"Add meg a tokent","syncOff":"Szinkron kikapcsolva","dlgTitle":"Szinkronizálás GitHubbal","dlgP":"A költségek egy JSON fájlban tárolódnak a repódban. Mindkét telefonon ugyanezt add meg.","repoLbl":"Repó (felhasználó/repó)","fileLbl":"Fájl neve","howTo":"Hogyan szerezz tokent?","ol2":"Repository access: Only select repositories, és válaszd ki az adat repót.","ol4":"Másold be ide. A token csak ezen a telefonon marad, a fájlba nem kerül.","ghSave":"Mentés és szinkronizálás","ghOff":"Szinkron kikapcsolása",send:function(f,o){return D.hu[f]+" kell átküldenie "+D.hu[o]+":"},settleAsk:function(f,a){return f+" átküldte: "+a+". Nullázod az egyenleget?"},stErr:function(m){return"☁ Hiba: "+m+". Koppints a beállításhoz."}},
+sk:{"title":"Spoločné výdavky","amount":"Suma","store":"Obchod","other":"Iné","storeNamePh":"Názov obchodu","time":"Dátum a čas","save":"Uložiť výdavok","zPaid":"Zoli zaplatil","vPaid":"Veronika zaplatila","allTotal":"Spolu: ","settleBtn":"Poslané, vynulovať","log":"Záznamy","old":"Predtým vyrovnané","stats":"Štatistika","all":"Všetko","thisMonth":"Tento mesiac","total":"Spolu","count":"Nákupy","avg":"Priemer","byStore":"Podľa obchodov","monthly":"Mesačný prehľad (posledných 6 mesiacov, €)","statsEmpty":"Štatistika sa zobrazí po prvom výdavku.","noMonth":"Tento mesiac zatiaľ nie sú žiadne výdavky.","none":"Žiadne otvorené položky, všetko je vyrovnané.","even":"Ste si kvit, nikto nemusí nič posielať.","logEmpty":"Zatiaľ žiadny výdavok. Pridaj prvý hore.","del":"Zmazať","delAsk":"Zmazať túto položku?","cancel":"Zrušiť","settleAll":"Označiť všetko ako vyrovnané?","settleOk":"Vynulovať","settledToast":"Zostatok vynulovaný","settledRow":"Vyrovnané:","saved":"uložené","vWho":"Vyber, kto platil","vAmt":"Zadaj sumu","vStore":"Vyber obchod","vName":"Napíš názov obchodu","storeErr":"Uloženie v prehliadači zlyhalo","stOff":"☁ Iba v tomto telefóne. Klepni pre spoločnú synchronizáciu.","stSync":"☁ Synchronizácia…","stOk":"☁ Synchronizované","e401":"neplatný token","e403":"chýba oprávnenie","e404":"repozitár sa nenašiel","econflict":"konflikt, skús znova","enone":"bez pripojenia","repoFmt":"Formát repozitára: používateľ/repozitár","needTok":"Zadaj token","syncOff":"Synchronizácia vypnutá","dlgTitle":"Synchronizácia cez GitHub","dlgP":"Výdavky sa ukladajú do súboru JSON vo vašom repozitári. Na oboch telefónoch zadaj to isté.","repoLbl":"Repozitár (používateľ/repozitár)","fileLbl":"Názov súboru","howTo":"Ako získať token?","ol2":"Repository access: Only select repositories a vyber repozitár s dátami.","ol4":"Vlož ho sem. Token zostane len v tomto telefóne, do súboru sa neukladá.","ghSave":"Uložiť a synchronizovať","ghOff":"Vypnúť synchronizáciu",send:function(f,o){return f+" musí poslať "+D.sk[o]+":"},settleAsk:function(f,a){return f+(f==="Veronika"?" poslala: ":" poslal: ")+a+". Vynulovať zostatok?"},stErr:function(m){return"☁ Chyba: "+m+". Klepni pre nastavenia."}}};
+var LK=KEY+"-lang",LANG=null,ST=["",null];
+try{LANG=localStorage.getItem(LK)}catch(e){}
+if(LANG!=="hu"&&LANG!=="sk"){LANG="hu";var ls=navigator.languages||[navigator.language||""];for(var li=0;li<ls.length;li++){var lc=String(ls[li]).toLowerCase().slice(0,2);if(lc==="sk"||lc==="hu"){LANG=lc;break}}}
+var LOC=LANG==="sk"?"sk-SK":"hu-HU";
+function tx(k){var v=T[LANG][k];return v!==undefined?v:T.hu[k]}
+Object.assign(T.hu,{"ownLbl":"Ebből saját (nem közös)","ownHint":"Pl. dezodor csak magadnak. Ez az összeg nem számít bele a közös költségbe.","ownIn":"ebből saját","noteLbl":"Megjegyzés (nem kötelező)","notePh":"pl. ajándék","vOwn":"A saját rész nem lehet több az összegnél","edTitle":"Tétel szerkesztése","saveEdit":"Mentés","edited":"Módosítva","undo":"Visszavonás","undoAsk":"Visszavonod az utolsó nullázást? A tételek újra nyitottak lesznek.","undoneToast":"Nullázás visszavonva","settledZero":"Elszámolva, egyenlők voltatok","rcBtn":"Rendszeres költségek","rcP":"Havonta automatikusan bekerülnek (pl. internet, bérleti díj).","rcEmpty":"Még nincs rendszeres költség.","rcNameLbl":"Megnevezés (pl. Internet)","rcDayLbl":"A hónap hányadik napján? (1–28)","rcAdd":"Hozzáadás","rcAdded":"Rendszeres költség hozzáadva","close":"Bezár","csvBtn":"Letöltés CSV-ben","cDate":"Dátum","cPayer":"Fizető","cStore":"Üzlet","cAmount":"Összeg (€)","cOwn":"Saját rész (€)","cShared":"Közös rész (€)","cNote":"Megjegyzés","cSettled":"Elszámolva","yes":"igen","no":"nem",ownNote:function(z,v){return"Saját részek (nem számítanak bele): Zoli "+z+", Veronika "+v},rcDay:function(d){return"minden hónap "+d+". napján"}});
+Object.assign(T.sk,{"ownLbl":"Z toho vlastné (nezdieľané)","ownHint":"Napr. dezodorant len pre seba. Táto suma sa do spoločných výdavkov nerátá.","ownIn":"z toho vlastné","noteLbl":"Poznámka (nepovinné)","notePh":"napr. darček","vOwn":"Vlastná časť nemôže byť vyššia ako suma","edTitle":"Upraviť položku","saveEdit":"Uložiť","edited":"Upravené","undo":"Vrátiť späť","undoAsk":"Vrátiť posledné vynulovanie? Položky budú opäť otvorené.","undoneToast":"Vynulovanie vrátené","settledZero":"Vyrovnané, boli ste si kvit","rcBtn":"Pravidelné výdavky","rcP":"Každý mesiac sa pridajú automaticky (napr. internet, nájom).","rcEmpty":"Zatiaľ žiadne pravidelné výdavky.","rcNameLbl":"Názov (napr. Internet)","rcDayLbl":"Ktorého dňa v mesiaci? (1–28)","rcAdd":"Pridať","rcAdded":"Pravidelný výdavok pridaný","close":"Zavrieť","csvBtn":"Stiahnuť CSV","cDate":"Dátum","cPayer":"Platil","cStore":"Obchod","cAmount":"Suma (€)","cOwn":"Vlastná časť (€)","cShared":"Spoločná časť (€)","cNote":"Poznámka","cSettled":"Vyrovnané","yes":"áno","no":"nie",ownNote:function(z,v){return"Vlastné časti (nezapočítané): Zoli "+z+", Veronika "+v},rcDay:function(d){return"každý mesiac "+d+". dňa"}});
+
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&p.expenses){S=p;S.currency="€";S.deleted=S.deleted||[];S.settlements=S.settlements||[];S.recurring=S.recurring||[]}}}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast(tx("storeErr"))}}
+function save(){persist();sync()}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function money(n){return n.toLocaleString(LOC,{maximumFractionDigits:2})+" "+S.currency}
+function nowLocal(){var d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
+function fmt(iso){var d=new Date(iso);return d.toLocaleDateString(LOC,{month:"short",day:"numeric"})+", "+d.toLocaleTimeString(LOC,{hour:"2-digit",minute:"2-digit"})}
+var tt;function toast(m){var t=$("toast");t.textContent=m;try{if(!t.matches(":popover-open"))t.showPopover()}catch(e){}t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on");setTimeout(function(){try{t.hidePopover()}catch(e){}},300)},2400)}
+function row(e){var li=document.createElement("li"),d=document.createElement("span"),i=document.createElement("div"),b=document.createElement("b"),s=document.createElement("small"),m=document.createElement("span");
+d.className="dot "+e.who;i.className="info";b.textContent=(e.rec?"🔁 ":"")+e.store;s.textContent=e.who+" · "+fmt(e.date)+(e.own>0?" · "+tx("ownIn")+" "+money(e.own):"")+(e.note?" · "+e.note:"");i.append(b,s);m.className="sum";m.textContent=money(e.amount);li.append(d,i,m);return li}
+
+function render(){
+
+var open=S.expenses.filter(function(e){return!e.settled}),t={Zoli:0,Veronika:0},all={Zoli:0,Veronika:0},ow={Zoli:0,Veronika:0};
+S.expenses.forEach(function(e){all[e.who]+=sh(e);if(!e.settled){t[e.who]+=sh(e);ow[e.who]+=e.own||0}});
+$("ownNote").textContent=(ow.Zoli||ow.Veronika)?tx("ownNote")(money(ow.Zoli),money(ow.Veronika)):"";$("tz").textContent=money(t.Zoli);$("tv").textContent=money(t.Veronika);
+$("az").textContent=tx("allTotal")+money(all.Zoli);$("av").textContent=tx("allTotal")+money(all.Veronika);
+var sum=t.Zoli+t.Veronika,pz=sum?t.Zoli/sum*100:50;$("ba").style.width=pz+"%";$("bb").style.width=(100-pz)+"%";
+var diff=Math.round((t.Zoli-t.Veronika)/2*100)/100,r=$("res");
+if(!open.length){r.className="res even";r.textContent=tx("none")}
+else if(diff===0){r.className="res even";r.textContent=tx("even")}
+else{r.className="res";var from=diff>0?"Veronika":"Zoli",to=diff>0?"Zoli":"Veronika";
+r.textContent="";r.append(tx("send")(from,to));var st=document.createElement("strong");st.textContent=money(Math.abs(diff));r.append(st)}
+$("settle").disabled=!open.length;
+var log=$("log");log.textContent="";
+if(!open.length){var e=document.createElement("li");e.className="empty";e.textContent=tx("logEmpty");log.append(e)}
+open.slice().sort(function(a,b){return b.date.localeCompare(a.date)}).forEach(function(x){
+var li=row(x),bt=document.createElement("button");bt.className="del";bt.textContent="×";bt.setAttribute("aria-label",tx("del"));
+li.children[1].style.cursor="pointer";li.children[1].onclick=function(){openEdit(x)};bt.onclick=function(){ask(tx("delAsk")+" "+x.store+", "+money(x.amount),tx("del"),function(){S.expenses=S.expenses.filter(function(y){return y.id!==x.id});S.deleted.push(x.id);save();render()})};li.append(bt);log.append(li)});
+var old=S.expenses.filter(function(e){return e.settled}).map(function(e){return{k:"e",d:e.date,e:e}}).concat(S.settlements.map(function(s){return{k:"s",d:s.date,s:s}}));
+var lastS=lastSettle();$("oldBox").hidden=!old.length;var ol=$("old");ol.textContent="";
+old.sort(function(a,b){return b.d.localeCompare(a.d)}).forEach(function(o){
+if(o.k==="e"){ol.append(row(o.e))}else{var li=document.createElement("li");li.className="set";li.textContent=(o.s.amount>0?tx("settledRow")+" "+o.s.from+" → "+o.s.to+", "+money(o.s.amount):tx("settledZero"))+" ("+fmt(o.s.date)+")";if(lastS&&o.s.id===lastS.id&&o.s.ids){var ub=document.createElement("button");ub.className="undo";ub.textContent=tx("undo");ub.onclick=undoSettle;li.append(ub)}ol.append(li)}});stats()}
+
+$("who").onclick=function(e){var b=e.target.closest("button");if(!b)return;who=b.dataset.p;[].forEach.call($("who").children,function(c){c.setAttribute("aria-pressed",c===b)})};
+var sc=$("stores");STORES.forEach(function(n){var b=document.createElement("button");b.type="button";b.dataset.s=n;b.textContent=n==="Más"?tx("other"):n;b.setAttribute("aria-pressed","false");
+b.onclick=function(){store=n;[].forEach.call(sc.children,function(c){c.setAttribute("aria-pressed",c===b)});$("other").hidden=n!=="Más";if(n==="Más")$("other").focus()};sc.append(b)});
+
+$("add").onclick=function(){
+var amt=num($("amount").value),own=num($("own").value)||0;
+if(!who)return toast(tx("vWho"));
+if(!(amt>0))return toast(tx("vAmt"));
+if(own<0||own>amt)return toast(tx("vOwn"));
+if(!store)return toast(tx("vStore"));
+var name=store==="Más"?$("other").value.trim():store;if(!name)return toast(tx("vName"));
+var d=$("date").value||nowLocal();
+S.expenses.push({id:uid(),who:who,amount:r2(amt),own:r2(own),store:name,date:d,note:$("note").value.trim(),settled:false,u:Date.now()});save();
+$("amount").value="";$("own").value="";$("note").value="";$("other").value="";$("date").value=nowLocal();render();toast(who+": "+money(amt)+" "+tx("saved"))};
+$("settle").onclick=function(){
+var t={Zoli:0,Veronika:0};S.expenses.forEach(function(e){if(!e.settled)t[e.who]+=sh(e)});
+var diff=Math.round((t.Zoli-t.Veronika)/2*100)/100,txt=diff===0?tx("settleAll"):tx("settleAsk")(diff>0?"Veronika":"Zoli",money(Math.abs(diff)));
+ask(txt,tx("settleOk"),function(){
+var ids=[],now=Date.now();S.expenses.forEach(function(e){if(!e.settled){ids.push(e.id);e.settled=true;e.u=now}});
+S.settlements.push({id:uid(),date:nowLocal(),from:diff>0?"Veronika":"Zoli",to:diff>0?"Zoli":"Veronika",amount:Math.abs(diff),ids:ids});
+save();render();toast(tx("settledToast"))})};
+function ask(msg,ok,cb){$("cfMsg").textContent=msg;$("cfOk").textContent=ok;$("cf").showModal();
+$("cfOk").onclick=function(){$("cf").close();cb()};$("cfNo").onclick=function(){$("cf").close()}}
+var range="all";
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function stats(){
+var now=new Date(),Y=now.getFullYear(),M=now.getMonth(),box=$("stats");
+[].forEach.call($("range").children,function(b){b.setAttribute("aria-pressed",b.dataset.r===range)});
+if(!S.expenses.length){box.innerHTML='<p class="empty">'+tx("statsEmpty")+'</p>';return}
+var L=S.expenses.filter(function(e){var d=new Date(e.date);return range==="all"||(d.getFullYear()===Y&&d.getMonth()===M)}),z=0,v=0,st={};
+L.forEach(function(e){var o=st[e.store]||(st[e.store]={z:0,v:0,n:0});o.n++;if(e.who==="Zoli"){z+=e.amount;o.z+=e.amount}else{v+=e.amount;o.v+=e.amount}});
+var tot=z+v,h='<div class="kpi"><div><small>'+tx("total")+'</small><b>'+money(tot)+'</b></div><div><small>'+tx("count")+'</small><b>'+L.length+'</b></div><div><small>'+tx("avg")+'</small><b>'+money(L.length?tot/L.length:0)+'</b></div></div>';
+h+='<div class="lg"><span><i class="dot Zoli"></i>Zoli</span><span><i class="dot Veronika"></i>Veronika</span></div>';
+if(!L.length){h+='<p class="empty">'+tx("noMonth")+'</p>'}
+else{
+h+='<div class="hb"><div class="t p"><span>Zoli: '+money(z)+' ('+Math.round(z/tot*100)+'%)</span><span>Veronika: '+money(v)+' ('+Math.round(v/tot*100)+'%)</span></div><div class="tr"><div class="f"><i class="zc" style="width:'+z/tot*100+'%"></i><i class="vc" style="width:'+v/tot*100+'%"></i></div></div></div>';
+var arr=Object.keys(st).map(function(k){return{k:k,o:st[k],t:st[k].z+st[k].v}}).sort(function(a,b){return b.t-a.t}),mx=arr[0].t;
+h+='<h3>'+tx("byStore")+'</h3>';
+arr.forEach(function(a){h+='<div class="hb"><div class="t"><span>'+esc(a.k)+' <small>'+a.o.n+'× · '+Math.round(a.t/tot*100)+'%</small></span><span>'+money(a.t)+'</span></div><div class="tr"><div class="f" style="width:'+a.t/mx*100+'%"><i class="zc" style="width:'+a.o.z/a.t*100+'%"></i><i class="vc" style="width:'+a.o.v/a.t*100+'%"></i></div></div></div>'})}
+var ms=[],mm=0;
+for(var i=5;i>=0;i--){var d=new Date(Y,M-i,1),r={l:d.toLocaleDateString(LOC,{month:"short"}),z:0,v:0};
+S.expenses.forEach(function(e){var x=new Date(e.date);if(x.getFullYear()===d.getFullYear()&&x.getMonth()===d.getMonth()){if(e.who==="Zoli")r.z+=e.amount;else r.v+=e.amount}});
+r.t=r.z+r.v;mm=Math.max(mm,r.t);ms.push(r)}
+h+='<h3>'+tx("monthly")+'</h3><div class="cols">';
+ms.forEach(function(r){h+='<div class="c"><span class="mv">'+(r.t?Math.round(r.t):"")+'</span><div class="stk" style="height:'+(r.t?Math.max(3,Math.round(r.t/mm*94)):0)+'px">'+(r.t?'<i class="zc" style="height:'+r.z/r.t*100+'%"></i><i class="vc" style="height:'+r.v/r.t*100+'%"></i>':'')+'</div><small>'+r.l+'</small></div>'});
+box.innerHTML=h+'</div>'}
+$("range").onclick=function(e){var b=e.target.closest("button");if(!b)return;range=b.dataset.r;stats()};
+var CK=KEY+"-gh",C=null;try{C=JSON.parse(localStorage.getItem(CK))}catch(e){}
+
+function setStatus(k,m){var b=$("st");b.className="pill "+(k||"");
+ST=[k,m];b.textContent=!C?tx("stOff"):k==="sync"?tx("stSync"):k==="err"?tx("stErr")(T[LANG]["e"+m]||(/^\d+$/.test(m)?m:tx("enone"))):tx("stOk")}
+function srt(a){return(a||[]).slice().sort(function(x,y){return x.id<y.id?-1:1})}
+function pack(d){return JSON.stringify({e:srt(d.expenses),s:srt(d.settlements),r:srt(d.recurring),d:(d.deleted||[]).slice().sort()})}
+function vals(o){return Object.keys(o).map(function(k){return o[k]})}
+function merge(r){var del={},m={},sm={},rc={};S.deleted.concat(r.deleted||[]).forEach(function(i){del[i]=1});
+(r.expenses||[]).concat(S.expenses).forEach(function(e){if(del[e.id])return;var o=m[e.id],a=e.u||0;if(!o||a>(o.u||0)||(a===(o.u||0)&&e.settled&&!o.settled))m[e.id]=Object.assign({},e)});
+(r.settlements||[]).concat(S.settlements).forEach(function(x){if(!del[x.id])sm[x.id]=x});
+(r.recurring||[]).concat(S.recurring).forEach(function(x){if(!del[x.id])rc[x.id]=x});
+S.expenses=vals(m);S.settlements=vals(sm);S.recurring=vals(rc);S.deleted=Object.keys(del)}
+function enc(t){var b="";new TextEncoder().encode(t).forEach(function(c){b+=String.fromCharCode(c)});return btoa(b)}
+function dec(t){return new TextDecoder().decode(Uint8Array.from(atob(t),function(c){return c.charCodeAt(0)}))}
+function H(){return{Authorization:"Bearer "+C.token,Accept:"application/vnd.github+json","Content-Type":"application/json"}}
+var busy=false,again=false;
+async function sync(){
+if(!C||!C.token||!C.repo){setStatus("");return}
+if(busy){again=true;return}
+busy=true;setStatus("sync");
+try{for(var n=0;n<3;n++){
+var url="https://api.github.com/repos/"+C.repo+"/contents/"+C.path,res=await fetch(url+"?t="+Date.now(),{headers:H(),cache:"no-store"}),sha=null,remote={};
+if(res.status===200){var j=await res.json();sha=j.sha;remote=JSON.parse(dec(j.content))}else if(res.status!==404)throw new Error(res.status);
+var local=pack(S),rem=pack(remote);merge(remote);recGen();persist();if(pack(S)!==local)render();
+if(pack(S)===rem){setStatus("ok");break}
+var body={message:"Frissítés "+new Date().toISOString(),content:enc(JSON.stringify({expenses:S.expenses,settlements:S.settlements,recurring:S.recurring,deleted:S.deleted},null,1))};
+if(sha)body.sha=sha;
+var put=await fetch(url,{method:"PUT",headers:H(),body:JSON.stringify(body)});
+if(put.ok){setStatus("ok");break}
+if(put.status!==409&&put.status!==422)throw new Error(put.status);
+if(n===2)throw new Error("conflict")}}
+catch(e){setStatus("err",e.message)}
+busy=false;if(again){again=false;sync()}}
+$("st").onclick=function(){$("ghRepo").value=C?C.repo:"";$("ghPath").value=C?C.path:"data.json";$("ghTok").value=C?C.token:"";$("dlg").showModal()};
+$("ghClose").onclick=function(){$("dlg").close()};
+$("ghOff").onclick=function(){C=null;try{localStorage.removeItem(CK)}catch(e){}$("dlg").close();setStatus("");toast(tx("syncOff"))};
+$("ghSave").onclick=function(){var r=$("ghRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/\/$/,""),t=$("ghTok").value.trim();
+if(!/^[\w.-]+\/[\w.-]+$/.test(r))return toast(tx("repoFmt"));
+if(!t)return toast(tx("needTok"));
+C={repo:r,token:t,path:$("ghPath").value.trim().replace(/^\//,"")||"data.json"};
+try{localStorage.setItem(CK,JSON.stringify(C))}catch(e){}
+$("dlg").close();sync()};
+document.addEventListener("visibilitychange",function(){if(document.hidden)return;if(!$("amount").value)$("date").value=nowLocal();if(recGen()){persist();render()}sync()});
+setInterval(function(){if(!document.hidden)sync()},30000);setStatus("");sync();
+
+function sh(e){return e.amount-(e.own||0)}
+function num(v){return parseFloat(String(v).replace(/\s/g,"").replace(",","."))}
+function r2(x){return Math.round(x*100)/100}
+function lastSettle(){return S.settlements.slice().sort(function(a,b){return(a.date+a.id)<(b.date+b.id)?-1:1}).pop()}
+function undoSettle(){var s=lastSettle();if(!s||!s.ids)return;ask(tx("undoAsk"),tx("undo"),function(){var now=Date.now();S.expenses.forEach(function(e){if(s.ids.indexOf(e.id)>-1){e.settled=false;e.u=now}});S.settlements=S.settlements.filter(function(x){return x.id!==s.id});S.deleted.push(s.id);save();render();toast(tx("undoneToast"))})}
+function setWho(box,w){[].forEach.call(box.children,function(c){c.setAttribute("aria-pressed",c.dataset.p===w)})}
+var edId=null,edWho=null,rcWho=null;
+var sl=$("sl");STORES.forEach(function(n){if(n!=="Más"){var o=document.createElement("option");o.value=n;sl.append(o)}});
+function openEdit(x){edId=x.id;edWho=x.who;setWho($("edWho"),edWho);$("edAmt").value=x.amount;$("edOwn").value=x.own||"";$("edStore").value=x.store;$("edDate").value=x.date;$("edNote").value=x.note||"";$("ed").showModal()}
+$("edWho").onclick=function(e){var b=e.target.closest("button");if(!b)return;edWho=b.dataset.p;setWho(this,edWho)};
+$("edCancel").onclick=function(){$("ed").close()};
+$("edSave").onclick=function(){var a=num($("edAmt").value),o=num($("edOwn").value)||0,n=$("edStore").value.trim();
+if(!(a>0))return toast(tx("vAmt"));if(o<0||o>a)return toast(tx("vOwn"));if(!n)return toast(tx("vName"));
+S.expenses.forEach(function(e){if(e.id===edId){e.who=edWho;e.amount=r2(a);e.own=r2(o);e.store=n;e.date=$("edDate").value||e.date;e.note=$("edNote").value.trim();e.u=Date.now()}});
+$("ed").close();save();render();toast(tx("edited"))};
+function recGen(){var now=new Date(),ch=false,del={},have={};S.deleted.forEach(function(i){del[i]=1});S.expenses.forEach(function(e){have[e.id]=1});
+S.recurring.forEach(function(r){var p=String(r.start).split("-"),y=+p[0],m=+p[1]-1;
+while(y<now.getFullYear()||(y===now.getFullYear()&&m<=now.getMonth())){
+var dt=new Date(y,m,r.day,12,0),id="r"+r.id+"-"+y+"-"+(m+1);
+if(dt<=now&&!have[id]&&!del[id]){S.expenses.push({id:id,who:r.who,amount:r.amount,own:0,store:r.store,date:new Date(dt-dt.getTimezoneOffset()*6e4).toISOString().slice(0,16),note:"",rec:true,settled:false,u:0});have[id]=1;ch=true}
+if(++m>11){m=0;y++}}});return ch}
+function rcRender(){var ul=$("rcList");ul.textContent="";
+if(!S.recurring.length){var em=document.createElement("li");em.className="empty";em.textContent=tx("rcEmpty");ul.append(em)}
+S.recurring.forEach(function(r){var li=document.createElement("li"),d=document.createElement("span"),i=document.createElement("div"),b=document.createElement("b"),sm=document.createElement("small"),m=document.createElement("span"),x=document.createElement("button");
+d.className="dot "+r.who;i.className="info";b.textContent=r.store;sm.textContent=r.who+" · "+tx("rcDay")(r.day);i.append(b,sm);m.className="sum";m.textContent=money(r.amount);
+x.className="del";x.textContent="×";x.setAttribute("aria-label",tx("del"));
+x.onclick=function(){S.recurring=S.recurring.filter(function(y){return y.id!==r.id});S.deleted.push(r.id);save();rcRender()};
+li.append(d,i,m,x);ul.append(li)})}
+$("rcBtn").onclick=function(){rcRender();$("rc").showModal()};
+$("rcClose").onclick=function(){$("rc").close()};
+$("rcWho").onclick=function(e){var b=e.target.closest("button");if(!b)return;rcWho=b.dataset.p;setWho(this,rcWho)};
+$("rcAdd").onclick=function(){var a=num($("rcAmt").value),n=$("rcName").value.trim(),dd=Math.min(28,Math.max(1,parseInt($("rcDayIn").value,10)||1));
+if(!rcWho)return toast(tx("vWho"));if(!(a>0))return toast(tx("vAmt"));if(!n)return toast(tx("vName"));
+var now=new Date(),y=now.getFullYear(),m=now.getMonth();if(now.getDate()>dd){m++;if(m>11){m=0;y++}}
+S.recurring.push({id:uid(),who:rcWho,amount:r2(a),store:n,day:dd,start:y+"-"+(m+1)});
+$("rcAmt").value="";$("rcName").value="";save();rcRender();toast(tx("rcAdded"))};
+$("csvBtn").onclick=function(){
+var rows=[[tx("cDate"),tx("cPayer"),tx("cStore"),tx("cAmount"),tx("cOwn"),tx("cShared"),tx("cNote"),tx("cSettled")]];
+S.expenses.slice().sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(e){rows.push([e.date.replace("T"," "),e.who,e.store,e.amount,e.own||0,r2(sh(e)),e.note||"",e.settled?tx("yes"):tx("no")])});
+var csv="\ufeff"+rows.map(function(r){return r.map(function(c){if(typeof c==="number")return String(c).replace(".",",");c=String(c);if(/^[=+\-@]/.test(c))c="'"+c;return'"'+c.replace(/"/g,'""')+'"'}).join(";")}).join("\r\n");
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="kiadasok-"+nowLocal().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove()};
+function applyLang(){LOC=LANG==="sk"?"sk-SK":"hu-HU";document.documentElement.lang=LANG;document.title=tx("title");[].forEach.call($("lang").children,function(b){b.setAttribute("aria-pressed",b.dataset.l===LANG)});
+[].forEach.call(document.querySelectorAll("[data-i18n]"),function(e){e.textContent=tx(e.dataset.i18n)});
+[].forEach.call(document.querySelectorAll("[data-ph]"),function(e){e.placeholder=tx(e.dataset.ph)});
+[].forEach.call($("stores").children,function(b){b.textContent=b.dataset.s==="Más"?tx("other"):b.dataset.s});
+setStatus(ST[0],ST[1]);render()}
+$("lang").onclick=function(e){var b=e.target.closest("button");if(!b)return;LANG=b.dataset.l;try{localStorage.setItem(LK,LANG)}catch(x){}applyLang()};
+recGen();persist();applyLang();$("date").value=nowLocal();
+})();
+</script>
+</body>
+</html>
