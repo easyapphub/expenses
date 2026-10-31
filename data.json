@@ -87,6 +87,17 @@
    "note": "",
    "settled": false,
    "u": 1793444213452
+  },
+  {
+   "id": "mvwc64x3lmhg",
+   "who": "Zoli",
+   "amount": 23.91,
+   "own": 0,
+   "store": "IKEA",
+   "date": "2026-10-31T12:46",
+   "note": "",
+   "settled": false,
+   "u": 1793447221863
   }
  ],
  "settlements": [],
