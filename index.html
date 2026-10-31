@@ -147,7 +147,7 @@ dialog{max-height:90vh;overflow:auto}
 <div id="stats"></div>
 </section>
 
-<section class="card" aria-label="Tools"><div class="tools"><button class="sec" id="rcBtn" type="button" data-i18n="rcBtn"></button><button class="sec" id="csvBtn" type="button" data-i18n="csvBtn"></button><button class="sec" id="instBtn" type="button" data-i18n="installBtn" hidden style="grid-column:1/-1;border-color:var(--ink)"></button></div></section>
+<section class="card" aria-label="Tools"><div class="tools"><button class="sec" id="rcBtn" type="button" data-i18n="rcBtn"></button><button class="sec" id="csvBtn" type="button" data-i18n="csvBtn"></button><button class="sec" id="instBtn" type="button" data-i18n="installBtn" hidden style="grid-column:1/-1;border-color:var(--ink)"></button><button class="sec" id="helpBtn" type="button" data-i18n="helpBtn" style="grid-column:1/-1"></button></div></section>
 </main>
 <dialog id="ed"><h2 data-i18n="edTitle"></h2>
 <div class="who" id="edWho"><button type="button" data-p="Zoli" aria-pressed="false">Zoli</button><button type="button" data-p="Veronika" aria-pressed="false">Veronika</button></div>
@@ -185,6 +185,8 @@ dialog{max-height:90vh;overflow:auto}
 <dialog id="cf"><p id="cfMsg" style="font-size:17px;color:var(--ink);margin:0 0 4px"></p>
 <button class="main" id="cfOk" type="button">OK</button>
 <button class="settle" id="cfNo" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px">Mégse</button></dialog>
+<dialog id="ih"><h2 data-i18n="helpTitle"></h2><p id="ihBody" style="white-space:pre-line;color:var(--ink);font-size:15px"></p>
+<button class="settle" id="ihClose" data-i18n="close" type="button" style="border-color:var(--line);color:var(--mute)"></button></dialog>
 <div class="toast" id="toast" popover="manual" role="status"></div>
 
 <script>
@@ -347,6 +349,17 @@ Object.assign(T.hu,{installBtn:"📲 Telepítés a telefonra"});Object.assign(T.
 var dip=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dip=e;$("instBtn").hidden=false});
 window.addEventListener("appinstalled",function(){dip=null;$("instBtn").hidden=true});
 $("instBtn").onclick=function(){if(!dip)return;dip.prompt();dip.userChoice.then(function(){dip=null;$("instBtn").hidden=true})};
+Object.assign(T.hu,{"helpBtn": "ℹ️ Telepítési súgó", "helpTitle": "Telepítés ellenőrzése", "ckHttps": "Biztonságos (https) cím", "ckManifest": "A manifest.webmanifest fájl elérhető", "ckSw": "A háttérszolgáltatás (sw.js) fut", "ckPrompt": "A böngésző felkínálja a telepítést", "advManifest": "A manifest.webmanifest vagy az ikonok hiányoznak a repóból. Töltsd fel mind a 7 fájlt, majd nyisd meg újra az oldalt.", "advSw": "Az sw.js még nem töltött be. Frissítsd az oldalt, várj pár másodpercet, és nyisd meg újra ezt a súgót. Ha továbbra sem megy, az sw.js nincs feltöltve.", "advIos": "iPhone-on nyisd meg Safariban, koppints a Megosztás gombra, majd a „Hozzáadás a főképernyőhöz” lehetőségre.", "advPrompt": "Minden rendben, koppints a „Telepítés a telefonra” gombra.", "advChrome": "Minden kész, de a böngésző nem kínálta fel a telepítést. Nyisd meg ezt az oldalt Chrome-ban, és ott: ⋮ menü → „Alkalmazás telepítése”. Előtte töröld a régi parancsikont a kezdőképernyőről."});Object.assign(T.sk,{"helpBtn": "ℹ️ Pomocník inštalácie", "helpTitle": "Kontrola inštalácie", "ckHttps": "Zabezpečená adresa (https)", "ckManifest": "Súbor manifest.webmanifest je dostupný", "ckSw": "Služba na pozadí (sw.js) beží", "ckPrompt": "Prehliadač ponúka inštaláciu", "advManifest": "Chýba manifest.webmanifest alebo ikony v repozitári. Nahraj všetkých 7 súborov a otvor stránku znova.", "advSw": "Súbor sw.js sa ešte nenačítal. Obnov stránku, počkaj pár sekúnd a otvor tohto pomocníka znova. Ak to nepomôže, sw.js nie je nahraný.", "advIos": "Na iPhone otvor stránku v Safari, klepni na Zdieľať a potom na „Pridať na plochu“.", "advPrompt": "Všetko je v poriadku, klepni na „Inštalovať do telefónu“.", "advChrome": "Všetko je pripravené, ale prehliadač neponúkol inštaláciu. Otvor stránku v Chrome a tam: menu ⋮ → „Inštalovať aplikáciu“. Predtým vymaž starý odkaz z plochy."});
+function inStandalone(){return(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true}
+async function installHelp(){
+var ua=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(ua),man=false,sw=false;
+try{var r=await fetch("manifest.webmanifest",{cache:"no-store"});man=r.ok&&!!(await r.json()).icons}catch(e){}
+try{var g=await navigator.serviceWorker.getRegistration();sw=!!(g&&(g.active||g.waiting||g.installing))}catch(e){}
+var L=[[tx("ckHttps"),location.protocol==="https:"],[tx("ckManifest"),man],[tx("ckSw"),sw],[tx("ckPrompt"),!!dip]];
+var adv=!man?tx("advManifest"):!sw?tx("advSw"):ios?tx("advIos"):dip?tx("advPrompt"):tx("advChrome");
+$("ihBody").textContent=L.map(function(x){return(x[1]?"✅ ":"❌ ")+x[0]}).join("\n")+"\n\n"+adv;$("ih").showModal()}
+$("helpBtn").onclick=installHelp;$("ihClose").onclick=function(){$("ih").close()};
+if(inStandalone())$("helpBtn").hidden=true;
 function b64(a){var t="";a.forEach(function(c){t+=String.fromCharCode(c)});return btoa(t)}
 function ub64(t){return Uint8Array.from(atob(t),function(c){return c.charCodeAt(0)})}
 var ITER=600000,LOGPATH=".naplo/log.json",PL=[];
