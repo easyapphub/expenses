@@ -109,6 +109,17 @@
    "note": "",
    "settled": false,
    "u": 1793456182059
+  },
+  {
+   "id": "mvwjynhhx933",
+   "who": "Veronika",
+   "amount": 21.5,
+   "own": 0,
+   "store": "Action",
+   "date": "2026-10-31T16:24",
+   "note": "",
+   "settled": false,
+   "u": 1793460309605
   }
  ],
  "settlements": [],
