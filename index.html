@@ -147,7 +147,7 @@ dialog{max-height:90vh;overflow:auto}
 <div id="stats"></div>
 </section>
 
-<section class="card" aria-label="Tools"><div class="tools"><button class="sec" id="rcBtn" type="button" data-i18n="rcBtn"></button><button class="sec" id="csvBtn" type="button" data-i18n="csvBtn"></button></div></section>
+<section class="card" aria-label="Tools"><div class="tools"><button class="sec" id="rcBtn" type="button" data-i18n="rcBtn"></button><button class="sec" id="csvBtn" type="button" data-i18n="csvBtn"></button><button class="sec" id="instBtn" type="button" data-i18n="installBtn" hidden style="grid-column:1/-1;border-color:var(--ink)"></button></div></section>
 </main>
 <dialog id="ed"><h2 data-i18n="edTitle"></h2>
 <div class="who" id="edWho"><button type="button" data-p="Zoli" aria-pressed="false">Zoli</button><button type="button" data-p="Veronika" aria-pressed="false">Veronika</button></div>
@@ -343,6 +343,10 @@ Object.assign(T.sk,{"loginTitle": "Prihlásenie", "userLbl": "Používateľské 
 
 Object.assign(T.hu,{forgiveBtn:"Elengedi, nullázás",forgiveOk:"Elengedés",forgiveToast:"Tartozás elengedve, egyenleg nullázva",forgiveAsk:function(c,d,a){return c+" elengedi "+d+" tartozását ("+a+"). Nullázod az egyenleget átutalás nélkül?"},forgiveRow:function(c,d,a){return"Elengedve: "+c+" elengedte "+d+" tartozását, "+a}});
 Object.assign(T.sk,{forgiveBtn:"Odpustené, vynulovať",forgiveOk:"Odpustiť",forgiveToast:"Dlh odpustený, zostatok vynulovaný",forgiveAsk:function(c,d,a){return c+(c==="Veronika"?" odpustila ":" odpustil ")+D.sk[d]+" dlh ("+a+"). Vynulovať zostatok bez prevodu?"},forgiveRow:function(c,d,a){return"Odpustené: "+c+(c==="Veronika"?" odpustila ":" odpustil ")+D.sk[d]+" dlh, "+a}});
+Object.assign(T.hu,{installBtn:"📲 Telepítés a telefonra"});Object.assign(T.sk,{installBtn:"📲 Inštalovať do telefónu"});
+var dip=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dip=e;$("instBtn").hidden=false});
+window.addEventListener("appinstalled",function(){dip=null;$("instBtn").hidden=true});
+$("instBtn").onclick=function(){if(!dip)return;dip.prompt();dip.userChoice.then(function(){dip=null;$("instBtn").hidden=true})};
 function b64(a){var t="";a.forEach(function(c){t+=String.fromCharCode(c)});return btoa(t)}
 function ub64(t){return Uint8Array.from(atob(t),function(c){return c.charCodeAt(0)})}
 var ITER=600000,LOGPATH=".naplo/log.json",PL=[];
