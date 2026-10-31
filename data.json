@@ -120,6 +120,17 @@
    "note": "",
    "settled": false,
    "u": 1793460309605
+  },
+  {
+   "id": "mvwl2m1nqmpk",
+   "who": "Zoli",
+   "amount": 20.75,
+   "own": 0,
+   "store": "Orlen",
+   "date": "2026-10-31T16:55",
+   "note": "",
+   "settled": false,
+   "u": 1793462173980
   }
  ],
  "settlements": [],
