@@ -76,6 +76,17 @@
    "note": "",
    "settled": false,
    "u": 1793380273613
+  },
+  {
+   "id": "mvwadnm4wp3w",
+   "who": "Veronika",
+   "amount": 11.92,
+   "own": 0,
+   "store": "Hornbach",
+   "date": "2026-10-31T11:56",
+   "note": "",
+   "settled": false,
+   "u": 1793444213452
   }
  ],
  "settlements": [],
