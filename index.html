@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2f5d8a">
 <title>Közös kiadások</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kiadások">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 :root{--bg:#f2f4f8;--card:#fff;--ink:#1b2130;--mute:#6b7488;--line:#e3e7ef;--z:#2f5d8a;--zs:#e3edf7;--v:#b4476b;--vs:#f8e6ed;--ok:#2e8b57;
 --r:16px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);box-sizing:border-box;
@@ -127,6 +133,7 @@ dialog{max-height:90vh;overflow:auto}
 <p class="res" id="res"></p>
 <p class="hint" id="ownNote"></p>
 <button class="settle" id="settle" type="button" data-i18n="settleBtn"></button>
+<button class="settle" id="forgive" type="button" data-i18n="forgiveBtn" style="border-color:var(--line);color:var(--ink);margin-top:8px"></button>
 </section>
 
 <section class="card" aria-label="Napló">
@@ -158,24 +165,23 @@ dialog{max-height:90vh;overflow:auto}
 <label class="l" for="rcDayIn" data-i18n="rcDayLbl"></label><input id="rcDayIn" class="txt" type="number" min="1" max="28" value="1">
 <button class="main" id="rcAdd" type="button" data-i18n="rcAdd"></button>
 <button class="settle" id="rcClose" data-i18n="close" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></dialog>
-<dialog id="dlg">
-<h2 data-i18n="dlgTitle"></h2>
-<p data-i18n="dlgP"></p>
-<label class="l" for="ghRepo" data-i18n="repoLbl"></label>
-<input id="ghRepo" class="txt" type="text" placeholder="zoli/kozos-adatok" autocapitalize="off" autocomplete="off">
-<label class="l" for="ghPath" data-i18n="fileLbl"></label>
-<input id="ghPath" class="txt" type="text" value="data.json" autocapitalize="off" autocomplete="off">
-<label class="l" for="ghTok">Token</label>
-<input id="ghTok" class="txt" type="password" placeholder="github_pat_…" autocomplete="off">
-<details style="margin-top:12px"><summary data-i18n="howTo"></summary>
-<ol><li>GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.</li>
-<li data-i18n="ol2"></li>
-<li>Permissions → Contents: Read and write.</li>
-<li data-i18n="ol4"></li></ol></details>
-<button class="main" id="ghSave" type="button" data-i18n="ghSave"></button>
-<button class="settle" id="ghOff" data-i18n="ghOff" type="button" style="border-color:var(--line);color:var(--mute)">Szinkron kikapcsolása</button>
-<button class="settle" id="ghClose" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px">Mégse</button>
-</dialog>
+<dialog id="lg"><form id="lgForm"><h2 data-i18n="loginTitle"></h2>
+<label class="l" for="lgU" data-i18n="userLbl"></label><input id="lgU" class="txt" type="text" autocapitalize="off" autocomplete="username">
+<label class="l" for="lgP" data-i18n="passLbl"></label><input id="lgP" class="txt" type="password" autocomplete="current-password">
+<button class="main" id="lgGo" type="submit" data-i18n="loginBtn"></button>
+<button class="settle" id="lgLocal" data-i18n="localOnly" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button>
+<button class="settle" id="lgSetup" data-i18n="setupLink" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></form></dialog>
+<dialog id="ac"><h2 data-i18n="acTitle"></h2><p id="acInfo" style="color:var(--ink);font-size:16px"></p>
+<button class="main" id="acOut" data-i18n="logout" type="button"></button>
+<button class="settle" id="acClose" data-i18n="close" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></dialog>
+<dialog id="ad"><h2 data-i18n="adTitle"></h2><p data-i18n="adP"></p>
+<label class="l" for="adRepo" data-i18n="repoLbl"></label><input id="adRepo" class="txt" type="text" placeholder="zoli/kozos-adatok" autocapitalize="off" autocomplete="off">
+<label class="l" for="adTok" data-i18n="tokLbl"></label><input id="adTok" class="txt" type="password" placeholder="github_pat_…" autocomplete="off">
+<label class="l">Zoli</label><input id="adZu" class="txt" type="text" data-ph="userLbl" autocapitalize="off" autocomplete="off"><input id="adZp" class="txt" type="password" data-ph="passLbl" autocomplete="new-password" style="margin-top:6px">
+<label class="l">Veronika</label><input id="adVu" class="txt" type="text" data-ph="userLbl" autocapitalize="off" autocomplete="off"><input id="adVp" class="txt" type="password" data-ph="passLbl" autocomplete="new-password" style="margin-top:6px">
+<p class="hint" id="adOut"></p>
+<button class="main" id="adGen" type="button" data-i18n="adGen"></button>
+<button class="settle" id="adClose" data-i18n="close" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px"></button></dialog>
 <dialog id="cf"><p id="cfMsg" style="font-size:17px;color:var(--ink);margin:0 0 4px"></p>
 <button class="main" id="cfOk" type="button">OK</button>
 <button class="settle" id="cfNo" data-i18n="cancel" type="button" style="border-color:var(--line);color:var(--mute);margin-top:8px">Mégse</button></dialog>
@@ -220,20 +226,31 @@ if(!open.length){r.className="res even";r.textContent=tx("none")}
 else if(diff===0){r.className="res even";r.textContent=tx("even")}
 else{r.className="res";var from=diff>0?"Veronika":"Zoli",to=diff>0?"Zoli":"Veronika";
 r.textContent="";r.append(tx("send")(from,to));var st=document.createElement("strong");st.textContent=money(Math.abs(diff));r.append(st)}
-$("settle").disabled=!open.length;
+$("settle").disabled=!open.length;$("forgive").disabled=!open.length||diff===0;
 var log=$("log");log.textContent="";
 if(!open.length){var e=document.createElement("li");e.className="empty";e.textContent=tx("logEmpty");log.append(e)}
 open.slice().sort(function(a,b){return b.date.localeCompare(a.date)}).forEach(function(x){
 var li=row(x),bt=document.createElement("button");bt.className="del";bt.textContent="×";bt.setAttribute("aria-label",tx("del"));
-li.children[1].style.cursor="pointer";li.children[1].onclick=function(){openEdit(x)};bt.onclick=function(){ask(tx("delAsk")+" "+x.store+", "+money(x.amount),tx("del"),function(){S.expenses=S.expenses.filter(function(y){return y.id!==x.id});S.deleted.push(x.id);save();render()})};li.append(bt);log.append(li)});
+li.children[1].style.cursor="pointer";li.children[1].onclick=function(){openEdit(x)};bt.onclick=function(){ask(tx("delAsk")+" "+x.store+", "+money(x.amount),tx("del"),function(){S.expenses=S.expenses.filter(function(y){return y.id!==x.id});S.deleted.push(x.id);logA("TÖRLÉS",desc(x));save();render()})};li.append(bt);log.append(li)});
 var old=S.expenses.filter(function(e){return e.settled}).map(function(e){return{k:"e",d:e.date,e:e}}).concat(S.settlements.map(function(s){return{k:"s",d:s.date,s:s}}));
 var lastS=lastSettle();$("oldBox").hidden=!old.length;var ol=$("old");ol.textContent="";
 old.sort(function(a,b){return b.d.localeCompare(a.d)}).forEach(function(o){
-if(o.k==="e"){ol.append(row(o.e))}else{var li=document.createElement("li");li.className="set";li.textContent=(o.s.amount>0?tx("settledRow")+" "+o.s.from+" → "+o.s.to+", "+money(o.s.amount):tx("settledZero"))+" ("+fmt(o.s.date)+")";if(lastS&&o.s.id===lastS.id&&o.s.ids){var ub=document.createElement("button");ub.className="undo";ub.textContent=tx("undo");ub.onclick=undoSettle;li.append(ub)}ol.append(li)}});stats()}
+if(o.k==="e"){ol.append(row(o.e))}else{var li=document.createElement("li");li.className="set";li.textContent=(o.s.type==="forgive"?tx("forgiveRow")(o.s.to,o.s.from,money(o.s.amount)):o.s.amount>0?tx("settledRow")+" "+o.s.from+" → "+o.s.to+", "+money(o.s.amount):tx("settledZero"))+" ("+fmt(o.s.date)+")";if(lastS&&o.s.id===lastS.id&&o.s.ids){var ub=document.createElement("button");ub.className="undo";ub.textContent=tx("undo");ub.onclick=undoSettle;li.append(ub)}ol.append(li)}});buildStores();stats()}
 
 $("who").onclick=function(e){var b=e.target.closest("button");if(!b)return;who=b.dataset.p;[].forEach.call($("who").children,function(c){c.setAttribute("aria-pressed",c===b)})};
-var sc=$("stores");STORES.forEach(function(n){var b=document.createElement("button");b.type="button";b.dataset.s=n;b.textContent=n==="Más"?tx("other"):n;b.setAttribute("aria-pressed","false");
+var sc=$("stores");
+function storeOrder(){var cnt={},disp={},dk={};
+S.expenses.forEach(function(e){if(e.rec||!e.store)return;var n=String(e.store).trim(),k=n.toLowerCase();cnt[k]=(cnt[k]||0)+1;if(!disp[k])disp[k]=n});
+var defs=STORES.filter(function(n){return n!=="Más"});defs.forEach(function(n){dk[n.toLowerCase()]=1});
+var list=defs.map(function(n,i){return{n:n,c:cnt[n.toLowerCase()]||0,i:i}});
+var extra=Object.keys(cnt).filter(function(k){return!dk[k]}).map(function(k){return{n:disp[k],c:cnt[k],i:99}}).sort(function(x,y){return y.c-x.c}).slice(0,8);
+return list.concat(extra).sort(function(x,y){return y.c-x.c||x.i-y.i||(x.n<y.n?-1:1)}).map(function(x){return x.n})}
+function canon(n){if(!n)return n;var k=n.toLowerCase(),i;for(i=0;i<STORES.length;i++)if(STORES[i]!=="Más"&&STORES[i].toLowerCase()===k)return STORES[i];
+for(i=0;i<S.expenses.length;i++)if(!S.expenses[i].rec&&String(S.expenses[i].store).trim().toLowerCase()===k)return String(S.expenses[i].store).trim();return n}
+function buildStores(){sc.textContent="";var ord=storeOrder();
+ord.concat(["Más"]).forEach(function(n){var b=document.createElement("button");b.type="button";b.dataset.s=n;b.textContent=n==="Más"?tx("other"):n;b.setAttribute("aria-pressed",n===store);
 b.onclick=function(){store=n;[].forEach.call(sc.children,function(c){c.setAttribute("aria-pressed",c===b)});$("other").hidden=n!=="Más";if(n==="Más")$("other").focus()};sc.append(b)});
+var sl=$("sl");sl.textContent="";ord.forEach(function(n){var o=document.createElement("option");o.value=n;sl.append(o)})}
 
 $("add").onclick=function(){
 var amt=num($("amount").value),own=num($("own").value)||0;
@@ -241,17 +258,26 @@ if(!who)return toast(tx("vWho"));
 if(!(amt>0))return toast(tx("vAmt"));
 if(own<0||own>amt)return toast(tx("vOwn"));
 if(!store)return toast(tx("vStore"));
-var name=store==="Más"?$("other").value.trim():store;if(!name)return toast(tx("vName"));
+var name=store==="Más"?canon($("other").value.trim()):store;if(!name)return toast(tx("vName"));
 var d=$("date").value||nowLocal();
-S.expenses.push({id:uid(),who:who,amount:r2(amt),own:r2(own),store:name,date:d,note:$("note").value.trim(),settled:false,u:Date.now()});save();
+S.expenses.push({id:uid(),who:who,amount:r2(amt),own:r2(own),store:name,date:d,note:$("note").value.trim(),settled:false,u:Date.now()});logA("HOZZÁADÁS",desc(S.expenses[S.expenses.length-1]));save();
 $("amount").value="";$("own").value="";$("note").value="";$("other").value="";$("date").value=nowLocal();render();toast(who+": "+money(amt)+" "+tx("saved"))};
 $("settle").onclick=function(){
 var t={Zoli:0,Veronika:0};S.expenses.forEach(function(e){if(!e.settled)t[e.who]+=sh(e)});
 var diff=Math.round((t.Zoli-t.Veronika)/2*100)/100,txt=diff===0?tx("settleAll"):tx("settleAsk")(diff>0?"Veronika":"Zoli",money(Math.abs(diff)));
 ask(txt,tx("settleOk"),function(){
 var ids=[],now=Date.now();S.expenses.forEach(function(e){if(!e.settled){ids.push(e.id);e.settled=true;e.u=now}});
-S.settlements.push({id:uid(),date:nowLocal(),from:diff>0?"Veronika":"Zoli",to:diff>0?"Zoli":"Veronika",amount:Math.abs(diff),ids:ids});
+S.settlements.push({id:uid(),date:nowLocal(),from:diff>0?"Veronika":"Zoli",to:diff>0?"Zoli":"Veronika",amount:Math.abs(diff),ids:ids});logA("NULLÁZÁS",(diff===0?"egyenlő volt":(diff>0?"Veronika → Zoli ":"Zoli → Veronika ")+r2(Math.abs(diff))+" €")+", "+ids.length+" tétel");
 save();render();toast(tx("settledToast"))})};
+$("forgive").onclick=function(){
+var t={Zoli:0,Veronika:0};S.expenses.forEach(function(e){if(!e.settled)t[e.who]+=sh(e)});
+var diff=Math.round((t.Zoli-t.Veronika)/2*100)/100;if(diff===0)return;
+var cr=diff>0?"Zoli":"Veronika",db=diff>0?"Veronika":"Zoli",amt=r2(Math.abs(diff));
+ask(tx("forgiveAsk")(cr,db,money(amt)),tx("forgiveOk"),function(){
+var ids=[],now=Date.now();S.expenses.forEach(function(e){if(!e.settled){ids.push(e.id);e.settled=true;e.u=now}});
+S.settlements.push({id:uid(),date:nowLocal(),type:"forgive",from:db,to:cr,amount:amt,ids:ids});
+logA("TARTOZÁS ELENGEDVE",cr+" elengedte "+db+" tartozását: "+amt+" €, "+ids.length+" tétel");
+save();render();toast(tx("forgiveToast"))})};
 function ask(msg,ok,cb){$("cfMsg").textContent=msg;$("cfOk").textContent=ok;$("cf").showModal();
 $("cfOk").onclick=function(){$("cf").close();cb()};$("cfNo").onclick=function(){$("cf").close()}}
 var range="all";
@@ -281,7 +307,7 @@ $("range").onclick=function(e){var b=e.target.closest("button");if(!b)return;ran
 var CK=KEY+"-gh",C=null;try{C=JSON.parse(localStorage.getItem(CK))}catch(e){}
 
 function setStatus(k,m){var b=$("st");b.className="pill "+(k||"");
-ST=[k,m];b.textContent=!C?tx("stOff"):k==="sync"?tx("stSync"):k==="err"?tx("stErr")(T[LANG]["e"+m]||(/^\d+$/.test(m)?m:tx("enone"))):tx("stOk")}
+ST=[k,m];b.textContent=!C?tx("stOff"):k==="sync"?tx("stSync"):k==="err"?tx("stErr")(T[LANG]["e"+m]||(/^\d+$/.test(m)?m:tx("enone"))):tx("stOk")+(C.who?" · "+C.who:"")}
 function srt(a){return(a||[]).slice().sort(function(x,y){return x.id<y.id?-1:1})}
 function pack(d){return JSON.stringify({e:srt(d.expenses),s:srt(d.settlements),r:srt(d.recurring),d:(d.deleted||[]).slice().sort()})}
 function vals(o){return Object.keys(o).map(function(k){return o[k]})}
@@ -308,35 +334,89 @@ if(sha)body.sha=sha;
 var put=await fetch(url,{method:"PUT",headers:H(),body:JSON.stringify(body)});
 if(put.ok){setStatus("ok");break}
 if(put.status!==409&&put.status!==422)throw new Error(put.status);
-if(n===2)throw new Error("conflict")}}
+if(n===2)throw new Error("conflict")}
+await flushLog()}
 catch(e){setStatus("err",e.message)}
 busy=false;if(again){again=false;sync()}}
-$("st").onclick=function(){$("ghRepo").value=C?C.repo:"";$("ghPath").value=C?C.path:"data.json";$("ghTok").value=C?C.token:"";$("dlg").showModal()};
-$("ghClose").onclick=function(){$("dlg").close()};
-$("ghOff").onclick=function(){C=null;try{localStorage.removeItem(CK)}catch(e){}$("dlg").close();setStatus("");toast(tx("syncOff"))};
-$("ghSave").onclick=function(){var r=$("ghRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/\/$/,""),t=$("ghTok").value.trim();
-if(!/^[\w.-]+\/[\w.-]+$/.test(r))return toast(tx("repoFmt"));
-if(!t)return toast(tx("needTok"));
-C={repo:r,token:t,path:$("ghPath").value.trim().replace(/^\//,"")||"data.json"};
-try{localStorage.setItem(CK,JSON.stringify(C))}catch(e){}
-$("dlg").close();sync()};
+Object.assign(T.hu,{"loginTitle": "Bejelentkezés", "userLbl": "Felhasználónév", "passLbl": "Jelszó", "loginBtn": "Belépés", "localOnly": "Folytatás bejelentkezés nélkül", "setupLink": "Első beállítás: fiókok létrehozása", "loginBad": "Hibás felhasználónév vagy jelszó", "loginNoAuth": "Az auth.json nem érhető el. Előbb hozd létre az első beállításnál.", "needHttps": "A belépéshez https cím kell (a GitHub Pages cím jó).", "acTitle": "Fiók", "loggedAs": "Bejelentkezve:", "logout": "Kijelentkezés", "loggedOut": "Kijelentkeztél", "adTitle": "Fiókok létrehozása", "adP": "Egyszer kell elvégezni. A GitHub token titkosítva kerül az auth.json fájlba, jelszó nélkül nem olvasható. Használj hosszú jelszót (legalább 10 karakter).", "tokLbl": "GitHub token (egyszer kell)", "adGen": "auth.json létrehozása", "adNeed": "Tölts ki minden mezőt", "adWeak": "A jelszó legalább 10 karakter legyen", "adSame": "A két felhasználónév nem lehet ugyanaz", "working": "Dolgozom…", "adDone": "Kész! Töltsd fel az auth.json fájlt az app repójába (Add file → Upload files, felülírja a régit), majd 1–2 perc múlva jelentkezzetek be.", "stOff": "☁ Nincs bejelentkezve. Koppints a belépéshez."});
+Object.assign(T.sk,{"loginTitle": "Prihlásenie", "userLbl": "Používateľské meno", "passLbl": "Heslo", "loginBtn": "Prihlásiť sa", "localOnly": "Pokračovať bez prihlásenia", "setupLink": "Prvé nastavenie: vytvorenie účtov", "loginBad": "Nesprávne meno alebo heslo", "loginNoAuth": "Súbor auth.json nie je dostupný. Najprv ho vytvor v prvom nastavení.", "needHttps": "Na prihlásenie treba adresu https (adresa GitHub Pages je v poriadku).", "acTitle": "Účet", "loggedAs": "Prihlásený:", "logout": "Odhlásiť sa", "loggedOut": "Odhlásený", "adTitle": "Vytvorenie účtov", "adP": "Robí sa len raz. Token GitHubu sa uloží do auth.json zašifrovaný, bez hesla sa nedá prečítať. Použi dlhé heslo (aspoň 10 znakov).", "tokLbl": "Token GitHubu (potrebný raz)", "adGen": "Vytvoriť auth.json", "adNeed": "Vyplň všetky polia", "adWeak": "Heslo musí mať aspoň 10 znakov", "adSame": "Mená nesmú byť rovnaké", "working": "Pracujem…", "adDone": "Hotovo! Nahraj súbor auth.json do repozitára aplikácie (Add file → Upload files, prepíše starý) a o 1–2 minúty sa prihláste.", "stOff": "☁ Neprihlásený. Klepni pre prihlásenie."});
+
+Object.assign(T.hu,{forgiveBtn:"Elengedi, nullázás",forgiveOk:"Elengedés",forgiveToast:"Tartozás elengedve, egyenleg nullázva",forgiveAsk:function(c,d,a){return c+" elengedi "+d+" tartozását ("+a+"). Nullázod az egyenleget átutalás nélkül?"},forgiveRow:function(c,d,a){return"Elengedve: "+c+" elengedte "+d+" tartozását, "+a}});
+Object.assign(T.sk,{forgiveBtn:"Odpustené, vynulovať",forgiveOk:"Odpustiť",forgiveToast:"Dlh odpustený, zostatok vynulovaný",forgiveAsk:function(c,d,a){return c+(c==="Veronika"?" odpustila ":" odpustil ")+D.sk[d]+" dlh ("+a+"). Vynulovať zostatok bez prevodu?"},forgiveRow:function(c,d,a){return"Odpustené: "+c+(c==="Veronika"?" odpustila ":" odpustil ")+D.sk[d]+" dlh, "+a}});
+function b64(a){var t="";a.forEach(function(c){t+=String.fromCharCode(c)});return btoa(t)}
+function ub64(t){return Uint8Array.from(atob(t),function(c){return c.charCodeAt(0)})}
+var ITER=600000,LOGPATH=".naplo/log.json",PL=[];
+try{PL=JSON.parse(localStorage.getItem(KEY+"-log"))||[]}catch(e){}
+function saveLog(){try{localStorage.setItem(KEY+"-log",JSON.stringify(PL))}catch(e){}}
+function logA(a,d){var n=new Date();PL.push({id:uid(),t:n.toISOString(),at:n.toLocaleString("hu-HU"),who:(C&&C.who)||"?",u:(C&&C.u)||"",a:a,d:d||""});saveLog()}
+function desc(e){return e.store+" "+e.amount+" € ("+e.who+")"+(e.own>0?", saját: "+e.own+" €":"")+(e.note?", megjegyzés: "+e.note:"")+", "+String(e.date).replace("T"," ")}
+async function flushLog(){
+if(!PL.length||!C)return;
+var url="https://api.github.com/repos/"+C.repo+"/contents/"+LOGPATH;
+for(var n=0;n<3;n++){
+var res=await fetch(url+"?t="+Date.now(),{headers:H(),cache:"no-store"}),sha=null,rem=[];
+if(res.status===200){var j=await res.json();sha=j.sha;try{rem=JSON.parse(dec(j.content))}catch(e){return}}else if(res.status!==404)return;
+var m={};rem.concat(PL).forEach(function(x){m[x.id]=x});
+var all=vals(m).sort(function(a,b){return a.t<b.t?-1:a.t>b.t?1:0});
+var body={message:"Frissítés",content:enc("[\n"+all.map(function(x){return JSON.stringify(x)}).join(",\n")+"\n]\n")};
+if(sha)body.sha=sha;
+var put=await fetch(url,{method:"PUT",headers:H(),body:JSON.stringify(body)});
+if(put.ok){PL=[];saveLog();return}
+if(put.status!==409&&put.status!==422)return}}
+function dk(pw,salt,it){return crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]).then(function(k){return crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:it||ITER,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])})}
+function applyWho(){if(C&&C.who&&!who){who=C.who;setWho($("who"),who)}}
+async function doLogin(){
+var u=$("lgU").value.trim().toLowerCase(),pw=$("lgP").value;if(!u||!pw)return toast(tx("adNeed"));
+if(!window.crypto||!crypto.subtle)return toast(tx("needHttps"));
+$("lgGo").disabled=true;
+try{var r=await fetch("auth.json?t="+Date.now(),{cache:"no-store"});if(!r.ok){toast(tx("loginNoAuth"));return}
+var d=await r.json(),e=(d.users||[]).filter(function(x){return x.u===u})[0];if(!e){toast(tx("loginBad"));return}
+var key=await dk(pw,ub64(e.salt),d.iter),pt;
+try{pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:ub64(e.iv)},key,ub64(e.ct))}catch(x){toast(tx("loginBad"));return}
+C=JSON.parse(new TextDecoder().decode(pt));
+try{localStorage.setItem(CK,JSON.stringify(C))}catch(x){}
+$("lgP").value="";$("lg").close();applyWho();logA("BELÉPÉS",String(navigator.userAgent||"").slice(0,90));setStatus("");sync()}
+catch(err){toast(tx("loginNoAuth"))}finally{$("lgGo").disabled=false}}
+async function doLogout(){logA("KIJELENTKEZÉS","");try{await flushLog()}catch(e){}
+C=null;try{localStorage.removeItem(CK)}catch(e){}$("ac").close();setStatus("");toast(tx("loggedOut"))}
+async function mkAuth(){
+var repo=$("adRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/\/$/,""),tok=$("adTok").value.trim();
+var us=[{who:"Zoli",u:$("adZu").value.trim().toLowerCase(),p:$("adZp").value},{who:"Veronika",u:$("adVu").value.trim().toLowerCase(),p:$("adVp").value}];
+if(!/^[\w.-]+\/[\w.-]+$/.test(repo)||!tok||!us[0].u||!us[1].u||!us[0].p||!us[1].p)return toast(tx("adNeed"));
+if(us[0].u===us[1].u)return toast(tx("adSame"));
+if(us[0].p.length<10||us[1].p.length<10)return toast(tx("adWeak"));
+if(!window.crypto||!crypto.subtle)return toast(tx("needHttps"));
+$("adGen").disabled=true;toast(tx("working"));
+try{var out={v:1,iter:ITER,users:[]};
+for(var i=0;i<us.length;i++){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await dk(us[i].p,salt,ITER);
+var ct=await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,new TextEncoder().encode(JSON.stringify({repo:repo,token:tok,path:"data.json",who:us[i].who,u:us[i].u})));
+out.users.push({u:us[i].u,salt:b64(salt),iv:b64(iv),ct:b64(new Uint8Array(ct))})}
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,1)],{type:"application/json"}));a.download="auth.json";document.body.appendChild(a);a.click();a.remove();
+$("adOut").textContent=tx("adDone");$("adTok").value="";$("adZp").value="";$("adVp").value=""}
+finally{$("adGen").disabled=false}}
+$("st").onclick=function(){if(C){$("acInfo").textContent=tx("loggedAs")+" "+(C.who||"?")+(C.u?" ("+C.u+")":"");$("ac").showModal()}else $("lg").showModal()};
+$("lgForm").onsubmit=function(e){e.preventDefault();doLogin()};
+$("lgLocal").onclick=function(){$("lg").close()};
+$("lgSetup").onclick=function(){$("lg").close();$("ad").showModal()};
+$("acOut").onclick=doLogout;$("acClose").onclick=function(){$("ac").close()};
+$("adGen").onclick=mkAuth;$("adClose").onclick=function(){$("ad").close()};
 document.addEventListener("visibilitychange",function(){if(document.hidden)return;if(!$("amount").value)$("date").value=nowLocal();if(recGen()){persist();render()}sync()});
-setInterval(function(){if(!document.hidden)sync()},30000);setStatus("");sync();
+setInterval(function(){if(!document.hidden)sync()},30000);window.addEventListener("online",function(){sync()});setStatus("");sync();
 
 function sh(e){return e.amount-(e.own||0)}
 function num(v){return parseFloat(String(v).replace(/\s/g,"").replace(",","."))}
 function r2(x){return Math.round(x*100)/100}
 function lastSettle(){return S.settlements.slice().sort(function(a,b){return(a.date+a.id)<(b.date+b.id)?-1:1}).pop()}
-function undoSettle(){var s=lastSettle();if(!s||!s.ids)return;ask(tx("undoAsk"),tx("undo"),function(){var now=Date.now();S.expenses.forEach(function(e){if(s.ids.indexOf(e.id)>-1){e.settled=false;e.u=now}});S.settlements=S.settlements.filter(function(x){return x.id!==s.id});S.deleted.push(s.id);save();render();toast(tx("undoneToast"))})}
+function undoSettle(){var s=lastSettle();if(!s||!s.ids)return;ask(tx("undoAsk"),tx("undo"),function(){var now=Date.now();S.expenses.forEach(function(e){if(s.ids.indexOf(e.id)>-1){e.settled=false;e.u=now}});S.settlements=S.settlements.filter(function(x){return x.id!==s.id});S.deleted.push(s.id);logA(s.type==="forgive"?"ELENGEDÉS VISSZAVONVA":"NULLÁZÁS VISSZAVONÁSA",s.from+" → "+s.to+" "+s.amount+" €");save();render();toast(tx("undoneToast"))})}
 function setWho(box,w){[].forEach.call(box.children,function(c){c.setAttribute("aria-pressed",c.dataset.p===w)})}
 var edId=null,edWho=null,rcWho=null;
-var sl=$("sl");STORES.forEach(function(n){if(n!=="Más"){var o=document.createElement("option");o.value=n;sl.append(o)}});
+
 function openEdit(x){edId=x.id;edWho=x.who;setWho($("edWho"),edWho);$("edAmt").value=x.amount;$("edOwn").value=x.own||"";$("edStore").value=x.store;$("edDate").value=x.date;$("edNote").value=x.note||"";$("ed").showModal()}
 $("edWho").onclick=function(e){var b=e.target.closest("button");if(!b)return;edWho=b.dataset.p;setWho(this,edWho)};
 $("edCancel").onclick=function(){$("ed").close()};
-$("edSave").onclick=function(){var a=num($("edAmt").value),o=num($("edOwn").value)||0,n=$("edStore").value.trim();
+$("edSave").onclick=function(){var a=num($("edAmt").value),o=num($("edOwn").value)||0,n=canon($("edStore").value.trim());
 if(!(a>0))return toast(tx("vAmt"));if(o<0||o>a)return toast(tx("vOwn"));if(!n)return toast(tx("vName"));
-S.expenses.forEach(function(e){if(e.id===edId){e.who=edWho;e.amount=r2(a);e.own=r2(o);e.store=n;e.date=$("edDate").value||e.date;e.note=$("edNote").value.trim();e.u=Date.now()}});
+S.expenses.forEach(function(e){if(e.id===edId){var bf=desc(e);e.who=edWho;e.amount=r2(a);e.own=r2(o);e.store=n;e.date=$("edDate").value||e.date;e.note=$("edNote").value.trim();e.u=Date.now();logA("MÓDOSÍTÁS",bf+" → "+desc(e))}});
 $("ed").close();save();render();toast(tx("edited"))};
 function recGen(){var now=new Date(),ch=false,del={},have={};S.deleted.forEach(function(i){del[i]=1});S.expenses.forEach(function(e){have[e.id]=1});
 S.recurring.forEach(function(r){var p=String(r.start).split("-"),y=+p[0],m=+p[1]-1;
@@ -349,7 +429,7 @@ if(!S.recurring.length){var em=document.createElement("li");em.className="empty"
 S.recurring.forEach(function(r){var li=document.createElement("li"),d=document.createElement("span"),i=document.createElement("div"),b=document.createElement("b"),sm=document.createElement("small"),m=document.createElement("span"),x=document.createElement("button");
 d.className="dot "+r.who;i.className="info";b.textContent=r.store;sm.textContent=r.who+" · "+tx("rcDay")(r.day);i.append(b,sm);m.className="sum";m.textContent=money(r.amount);
 x.className="del";x.textContent="×";x.setAttribute("aria-label",tx("del"));
-x.onclick=function(){S.recurring=S.recurring.filter(function(y){return y.id!==r.id});S.deleted.push(r.id);save();rcRender()};
+x.onclick=function(){S.recurring=S.recurring.filter(function(y){return y.id!==r.id});S.deleted.push(r.id);logA("RENDSZERES TÖRÖLVE",r.store+" "+r.amount+" €, "+r.who);save();rcRender()};
 li.append(d,i,m,x);ul.append(li)})}
 $("rcBtn").onclick=function(){rcRender();$("rc").showModal()};
 $("rcClose").onclick=function(){$("rc").close()};
@@ -357,21 +437,22 @@ $("rcWho").onclick=function(e){var b=e.target.closest("button");if(!b)return;rcW
 $("rcAdd").onclick=function(){var a=num($("rcAmt").value),n=$("rcName").value.trim(),dd=Math.min(28,Math.max(1,parseInt($("rcDayIn").value,10)||1));
 if(!rcWho)return toast(tx("vWho"));if(!(a>0))return toast(tx("vAmt"));if(!n)return toast(tx("vName"));
 var now=new Date(),y=now.getFullYear(),m=now.getMonth();if(now.getDate()>dd){m++;if(m>11){m=0;y++}}
-S.recurring.push({id:uid(),who:rcWho,amount:r2(a),store:n,day:dd,start:y+"-"+(m+1)});
+S.recurring.push({id:uid(),who:rcWho,amount:r2(a),store:n,day:dd,start:y+"-"+(m+1)});logA("RENDSZERES HOZZÁADVA",n+" "+r2(a)+" €, "+rcWho+", minden hónap "+dd+". napján");
 $("rcAmt").value="";$("rcName").value="";save();rcRender();toast(tx("rcAdded"))};
 $("csvBtn").onclick=function(){
 var rows=[[tx("cDate"),tx("cPayer"),tx("cStore"),tx("cAmount"),tx("cOwn"),tx("cShared"),tx("cNote"),tx("cSettled")]];
 S.expenses.slice().sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(e){rows.push([e.date.replace("T"," "),e.who,e.store,e.amount,e.own||0,r2(sh(e)),e.note||"",e.settled?tx("yes"):tx("no")])});
 var csv="\ufeff"+rows.map(function(r){return r.map(function(c){if(typeof c==="number")return String(c).replace(".",",");c=String(c);if(/^[=+\-@]/.test(c))c="'"+c;return'"'+c.replace(/"/g,'""')+'"'}).join(";")}).join("\r\n");
-var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="kiadasok-"+nowLocal().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove()};
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="kiadasok-"+nowLocal().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();logA("CSV LETÖLTÉS",S.expenses.length+" tétel");sync()};
 function applyLang(){LOC=LANG==="sk"?"sk-SK":"hu-HU";document.documentElement.lang=LANG;document.title=tx("title");[].forEach.call($("lang").children,function(b){b.setAttribute("aria-pressed",b.dataset.l===LANG)});
 [].forEach.call(document.querySelectorAll("[data-i18n]"),function(e){e.textContent=tx(e.dataset.i18n)});
 [].forEach.call(document.querySelectorAll("[data-ph]"),function(e){e.placeholder=tx(e.dataset.ph)});
 [].forEach.call($("stores").children,function(b){b.textContent=b.dataset.s==="Más"?tx("other"):b.dataset.s});
 setStatus(ST[0],ST[1]);render()}
 $("lang").onclick=function(e){var b=e.target.closest("button");if(!b)return;LANG=b.dataset.l;try{localStorage.setItem(LK,LANG)}catch(x){}applyLang()};
-recGen();persist();applyLang();$("date").value=nowLocal();
+recGen();persist();applyWho();applyLang();$("date").value=nowLocal();if(!C)try{$("lg").showModal()}catch(e){}
 })();
+if("serviceWorker"in navigator)window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});
 </script>
 </body>
 </html>
